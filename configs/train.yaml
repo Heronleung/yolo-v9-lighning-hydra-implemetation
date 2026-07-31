@@ -1,11 +1,10 @@
 defaults:
   - _self_
   - data: taco_yolo_300
-  - model: yolov9_c
+  - model: dual/c
   - trainer: single_gpu
   - optimizer: sgd
   - scheduler: linear
-  - loss: yolov9_tal_dual
   - callbacks: ema
   - paths: default
 

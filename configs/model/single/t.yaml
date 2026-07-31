@@ -1,0 +1,10 @@
+defaults:
+  - /loss: yolov9_tal
+  - _self_
+
+branch: single
+size: t
+cfg: models/detect/gelan-t.yaml
+ch: 3
+nc: ${data.nc}
+anchors: null
