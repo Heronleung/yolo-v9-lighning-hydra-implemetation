@@ -1,0 +1,12 @@
+ema:
+  decay: 0.9999
+  tau: 2000
+checkpoint:
+  monitor: fitness
+  mode: max
+  save_last: true
+  save_period: -1               # upstream --save-period: epoch{n}.pt every n epochs (-1 = off)
+close_mosaic:
+  disable_at: ${close_mosaic}   # epochs from the end
+early_stopping:
+  patience: 100                 # train_dual.py EarlyStopping default

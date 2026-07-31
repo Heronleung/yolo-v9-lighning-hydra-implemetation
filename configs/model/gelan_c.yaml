@@ -1,0 +1,4 @@
+cfg: models/detect/gelan-c.yaml   # upstream single-branch (DDetect head) model
+ch: 3
+nc: ${data.nc}           # resolves to 18
+anchors: null

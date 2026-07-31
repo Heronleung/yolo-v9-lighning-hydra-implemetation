@@ -1,0 +1,9 @@
+accelerator: gpu
+devices: 1
+strategy: auto
+sync_batchnorm: false            # original --sync-bn flag (off by default upstream)
+use_distributed_sampler: false   # DataModule shards via the upstream DistributedSampler
+precision: bf16-mixed    # bf16 avoids fp16 NaN when training yolov9-c from scratch
+max_epochs: ${epochs}
+accumulate_grad_batches: 1
+gradient_clip_val: null

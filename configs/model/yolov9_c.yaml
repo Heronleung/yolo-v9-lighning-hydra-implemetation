@@ -1,0 +1,4 @@
+cfg: models/detect/yolov9-c.yaml
+ch: 3
+nc: ${data.nc}
+anchors: null            # anchor-free; hyp.get('anchors') is null for yolov9-c

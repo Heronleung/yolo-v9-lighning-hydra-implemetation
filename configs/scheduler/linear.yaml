@@ -1,0 +1,6 @@
+type: linear             # lf(x) = (1 - x/epochs)*(1 - lrf) + lrf
+lrf: 0.01
+cos_lr: false            # set true to switch to one_cycle
+flat_cos_lr: false       # upstream --flat-cos-lr: flat first half, cosine second half (one_flat_cycle)
+fixed_lr: false          # upstream --fixed-lr: constant lr (lf = 1.0)
+# priority (same as train_dual.py): cos_lr > flat_cos_lr > fixed_lr > linear

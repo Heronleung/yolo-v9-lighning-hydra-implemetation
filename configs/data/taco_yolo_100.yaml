@@ -1,0 +1,41 @@
+path: /home/heron/projects/yolov9-main/data/taco_yolo_100
+train: train/images      # 100 images
+val: valid/images        # 105 images
+test: null
+nc: 18
+names:
+  - Aluminium foil
+  - Bottle cap
+  - Bottle
+  - Broken glass
+  - Can
+  - Carton
+  - Cigarette
+  - Cup
+  - Lid
+  - Other litter
+  - Other plastic
+  - Paper
+  - Plastic bag - wrapper
+  - Plastic container
+  - Pop tab
+  - Straw
+  - Styrofoam piece
+  - Unlabeled litter
+# augmentation (from hyp.scratch-high.yaml)
+hsv_h: 0.015
+hsv_s: 0.7
+hsv_v: 0.4
+degrees: 0.0
+translate: 0.1
+scale: 0.9
+shear: 0.0
+perspective: 0.0
+flipud: 0.0
+fliplr: 0.5
+mosaic: 1.0
+mixup: 0.15
+copy_paste: 0.3
+cache: false
+workers: 8
+rect_val: true

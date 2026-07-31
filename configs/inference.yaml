@@ -1,0 +1,31 @@
+defaults:
+  - _self_
+  - data: taco_yolo_300     # 18 TACO class names -- single source of truth
+
+weights: null               # REQUIRED, e.g. runs/finetune/ckpts_0/best.pt or best-converted.pt
+source: null                # REQUIRED: image file / folder / glob
+backend_data: null          # Hydra equivalent of upstream --data; path to backend dataset YAML
+imgsz: 640
+conf_thres: 0.25
+iou_thres: 0.45
+max_det: 1000
+device: ""                  # "" = auto, or "0", "0,1", "cpu"
+view_img: false
+save_txt: false
+save_conf: false
+save_crop: false
+nosave: false
+classes: null               # e.g. [0, 2] to filter classes
+agnostic_nms: false
+augment: false
+visualize: false            # upstream --visualize; save per-image feature maps
+update: false               # upstream --update; strip optimizer after successful inference
+half: false
+dnn: false
+vid_stride: 1
+project: runs/detect        # upstream layout: runs/detect/exp{n} (auto-increment)
+name: exp
+exist_ok: false
+line_thickness: 3
+hide_labels: false
+hide_conf: false

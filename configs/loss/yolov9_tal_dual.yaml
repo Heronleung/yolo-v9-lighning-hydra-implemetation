@@ -1,0 +1,7 @@
+_target_: utils.loss_tal_dual.ComputeLoss
+box: 7.5
+cls: 0.5
+dfl: 1.5
+reg_max: 16
+tal_topk: 10
+label_smoothing: 0.0     # upstream --label-smoothing

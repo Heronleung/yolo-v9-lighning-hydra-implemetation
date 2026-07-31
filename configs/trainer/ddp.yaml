@@ -1,0 +1,9 @@
+accelerator: gpu
+devices: 2                       # override on CLI: trainer.devices=4
+strategy: ddp
+sync_batchnorm: true             # matches train_dual.py --sync-bn under DDP
+use_distributed_sampler: false   # DataModule shards via the upstream DistributedSampler
+precision: bf16-mixed
+max_epochs: ${epochs}
+accumulate_grad_batches: 1
+gradient_clip_val: null

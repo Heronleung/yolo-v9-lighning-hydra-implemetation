@@ -1,0 +1,32 @@
+defaults:
+  - _self_
+  - data: taco_yolo_300
+  - model: yolov9_c
+  - trainer: single_gpu
+  - optimizer: sgd
+  - scheduler: linear
+  - loss: yolov9_tal_dual
+  - callbacks: ema
+  - paths: default
+
+seed: 0
+epochs: 300
+imgsz: 640
+batch_size: 8        # match the M0 smoke command
+task_name: yolov9c_taco
+close_mosaic: 15
+weights: null
+
+ckpt_prefix: ckpts      # versioned per run -> ckpts_0, ckpts_1, ...
+checkpoint_save_dir: checkpoints     # null = repo root; e.g. "runs/taco" -> <repo>/runs/taco/ckpts_0
+
+overwrite: false     # true: reuse/replace ckpts_0 instead of adding a new index
+
+resume: null         # path to a Lightning last.ckpt to resume a run, e.g. checkpoints/ckpts_0/last.ckpt
+
+# Tier 1/2 upstream arguments (2026-07-17)
+single_cls: false    # upstream --single-cls: train all classes as one class ("item")
+multi_scale: false   # upstream --multi-scale: per-batch random resize 0.5x-1.5x imgsz
+freeze: [0]          # upstream --freeze: [10] freezes layers 0-9; [3, 5] freezes exactly those; [0] = none
+noval: false         # upstream --noval: only validate the final epoch
+nosave: false        # upstream --nosave: only write last.pt/best.pt on the final epoch

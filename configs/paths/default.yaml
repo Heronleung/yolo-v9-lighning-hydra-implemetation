@@ -1,0 +1,4 @@
+root_dir: ${oc.env:PROJECT_ROOT,.}
+data_dir: ${paths.root_dir}/datasets
+log_dir: ${paths.root_dir}/runs
+output_dir: ${hydra:runtime.output_dir}

@@ -1,0 +1,8 @@
+name: SGD
+lr0: 0.001
+momentum: 0.937
+weight_decay: 0.0005
+warmup_epochs: 3.0
+warmup_momentum: 0.8
+warmup_bias_lr: 0.1
+# param grouping handled by smart_optimizer: g0 decay weights, g1 BN no-decay, g2 bias no-decay

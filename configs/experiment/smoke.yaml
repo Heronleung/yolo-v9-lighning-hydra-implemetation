@@ -1,0 +1,8 @@
+# @package _global_
+
+# Quick correctness check before a long run.
+# Replaces: epochs=1 batch_size=4
+# For an even faster check, combine with: +trainer.fast_dev_run=true
+task_name: smoke
+epochs: 1
+batch_size: 4
