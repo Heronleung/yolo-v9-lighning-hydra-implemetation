@@ -10,3 +10,8 @@ close_mosaic:
   disable_at: ${close_mosaic}   # epochs from the end
 early_stopping:
   patience: 100                 # train_dual.py EarlyStopping default
+plots:
+  enabled: true
+  csv_name: results.csv
+  results_name: results.png
+  loss_name: loss_curves.png
