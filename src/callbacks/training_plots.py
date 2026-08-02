@@ -17,31 +17,16 @@ except ImportError:
 
 
 class TrainingPlotsCallback(pl.Callback):
-    """Persist results.csv, loss_curves.png, and results.png during training."""
+    """Persist CSV, training curves, result charts, and confusion heatmaps."""
 
     COLUMNS = (
-        "epoch",
-        "train/box_loss",
-        "train/cls_loss",
-        "train/dfl_loss",
-        "metrics/precision",
-        "metrics/recall",
-        "metrics/mAP_0.5",
-        "metrics/mAP_0.5:0.95",
-        "val/fitness",
-        "lr/pg0",
-        "lr/pg1",
-        "lr/pg2",
+        "epoch", "train/box_loss", "train/cls_loss", "train/dfl_loss",
+        "metrics/precision", "metrics/recall", "metrics/mAP_0.5",
+        "metrics/mAP_0.5:0.95", "val/fitness", "lr/pg0", "lr/pg1", "lr/pg2",
     )
 
-    def __init__(
-        self,
-        dirpath="ckpts",
-        enabled=True,
-        csv_name="results.csv",
-        results_name="results.png",
-        loss_name="loss_curves.png",
-    ):
+    def __init__(self, dirpath="ckpts", enabled=True, csv_name="results.csv",
+                 results_name="results.png", loss_name="loss_curves.png"):
         super().__init__()
         self.dirpath = Path(dirpath)
         self.enabled = bool(enabled)
@@ -110,9 +95,7 @@ class TrainingPlotsCallback(pl.Callback):
         self.dirpath.mkdir(parents=True, exist_ok=True)
         epochs = sorted(self.rows)
         nrows = math.ceil(len(specs) / columns)
-        fig, axes = plt.subplots(
-            nrows, columns, figsize=(5 * columns, 3.8 * nrows), squeeze=False
-        )
+        fig, axes = plt.subplots(nrows, columns, figsize=(5 * columns, 3.8 * nrows), squeeze=False)
         for ax, (title, key) in zip(axes.flat, specs):
             points = [(e, self.rows[e].get(key)) for e in epochs]
             points = [(e, v) for e, v in points if v is not None]
@@ -134,25 +117,16 @@ class TrainingPlotsCallback(pl.Callback):
         self._write_csv()
         self._plot(
             self.loss_path,
-            [
-                ("Box Loss", "train/box_loss"),
-                ("Classification Loss", "train/cls_loss"),
-                ("DFL Loss", "train/dfl_loss"),
-            ],
+            [("Box Loss", "train/box_loss"), ("Classification Loss", "train/cls_loss"),
+             ("DFL Loss", "train/dfl_loss")],
             columns=3,
         )
         self._plot(
             self.results_path,
-            [
-                ("Box Loss", "train/box_loss"),
-                ("Classification Loss", "train/cls_loss"),
-                ("DFL Loss", "train/dfl_loss"),
-                ("Precision", "metrics/precision"),
-                ("Recall", "metrics/recall"),
-                ("mAP@0.5", "metrics/mAP_0.5"),
-                ("mAP@0.5:0.95", "metrics/mAP_0.5:0.95"),
-                ("Fitness", "val/fitness"),
-            ],
+            [("Box Loss", "train/box_loss"), ("Classification Loss", "train/cls_loss"),
+             ("DFL Loss", "train/dfl_loss"), ("Precision", "metrics/precision"),
+             ("Recall", "metrics/recall"), ("mAP@0.5", "metrics/mAP_0.5"),
+             ("mAP@0.5:0.95", "metrics/mAP_0.5:0.95"), ("Fitness", "val/fitness")],
             columns=4,
         )
 
@@ -183,6 +157,9 @@ class TrainingPlotsCallback(pl.Callback):
         row["metrics/mAP_0.5:0.95"] = self._metric(metrics, "val/mAP50-95")
         row["val/fitness"] = self._metric(metrics, "val/fitness")
         self._render()
+        confusion_matrix = getattr(pl_module, "confusion_matrix", None)
+        if confusion_matrix is not None:
+            confusion_matrix.save(self.dirpath)
 
     def on_fit_end(self, trainer, pl_module):
         if self._active(trainer) and self.rows:
