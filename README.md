@@ -397,7 +397,7 @@ All single-branch behavior is selected purely by Hydra config groups — the dua
 
 ### Checkpoint folder versioning
 
-Checkpoints go to `<checkpoint_save_dir>/ckpts_{n}` with an auto-incrementing suffix so runs never clobber each other:
+Checkpoints go to `<checkpoint_save_dir>/<ckpt_prefix>_{n}` with an auto-incrementing suffix:
 
 ```
 checkpoints/ckpts_0
