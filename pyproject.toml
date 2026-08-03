@@ -32,3 +32,6 @@ dev = [
     "pytest>=9.1.1",
     "thop>=0.1.1.post2209072238",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
