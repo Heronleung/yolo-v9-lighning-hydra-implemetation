@@ -1,5 +1,4 @@
-# yolo-v9
-=======
+
 # YOLOv9 Lightning + Hydra Training and Inference Usage
 
 This README is the practical reference for the Hydra + Lightning YOLOv9 project. It explains how the config files fit together, how to train, resume, evaluate, convert checkpoints, run inference, and debug common issues.

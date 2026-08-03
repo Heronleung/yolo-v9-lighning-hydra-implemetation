@@ -1,10 +1,12 @@
+# @package _global_
 defaults:
-  - /loss: yolov9_tal_dual
+  - /loss@_global_.loss: yolov9_tal_dual
   - _self_
 
-branch: dual
-size: e
-cfg: models/detect/yolov9-e.yaml
-ch: 3
-nc: ${data.nc}
-anchors: null
+model:
+  branch: dual
+  size: e
+  cfg: models/detect/yolov9-e.yaml
+  ch: 3
+  nc: ${data.nc}
+  anchors: null
