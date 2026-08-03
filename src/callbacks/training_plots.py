@@ -56,6 +56,18 @@ class TrainingPlotsCallback(pl.Callback):
                 return TrainingPlotsCallback._number(metrics[name])
         return None
 
+    @staticmethod
+    def _epoch_ticks(epochs, max_ticks=10):
+        """Return at most about max_ticks integer epoch labels, including both ends."""
+        if not epochs:
+            return []
+        first, last = int(min(epochs)), int(max(epochs))
+        step = max(1, math.ceil((last - first + 1) / max_ticks))
+        ticks = list(range(first, last + 1, step))
+        if ticks[-1] != last:
+            ticks.append(last)
+        return ticks
+
     def _load_existing(self):
         if self._loaded:
             return
@@ -93,6 +105,7 @@ class TrainingPlotsCallback(pl.Callback):
     def _plot(self, path, specs, columns):
         self.dirpath.mkdir(parents=True, exist_ok=True)
         epochs = sorted(self.rows)
+        epoch_ticks = self._epoch_ticks(epochs)
         nrows = math.ceil(len(specs) / columns)
         fig, axes = plt.subplots(nrows, columns, figsize=(5 * columns, 3.8 * nrows), squeeze=False)
         for ax, (title, key) in zip(axes.flat, specs):
@@ -103,6 +116,7 @@ class TrainingPlotsCallback(pl.Callback):
                 ax.plot(x, y, marker="o", linewidth=2, markersize=3)
             ax.set_title(title)
             ax.set_xlabel("Epoch")
+            ax.set_xticks(epoch_ticks)
             ax.grid(True, alpha=0.3)
         for ax in axes.flat[len(specs):]:
             ax.set_visible(False)

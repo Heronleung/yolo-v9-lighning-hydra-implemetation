@@ -19,6 +19,17 @@ class DummyTrainer:
     }
 
 
+def test_epoch_ticks_are_integer_and_include_endpoints():
+    assert TrainingPlotsCallback._epoch_ticks([]) == []
+    assert TrainingPlotsCallback._epoch_ticks([0]) == [0]
+    assert TrainingPlotsCallback._epoch_ticks(range(5)) == [0, 1, 2, 3, 4]
+
+    ticks = TrainingPlotsCallback._epoch_ticks(range(300))
+    assert ticks[0] == 0
+    assert ticks[-1] == 299
+    assert all(isinstance(tick, int) for tick in ticks)
+
+
 def test_writes_consolidated_results_and_resumes(tmp_path):
     callback = TrainingPlotsCallback(tmp_path)
     trainer = DummyTrainer()
