@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # yolo-v9
 =======
 # YOLOv9 Lightning + Hydra Training and Inference Usage
@@ -641,4 +640,3 @@ This project modernizes the YOLOv9 object-detection workflow with PyTorch Lightn
 - YOLOv9 paper — Learning What You Want to Learn Using Programmable Gradient Information
 - Original YOLOv9 repository
 - Official YOLOv9 release checkpoints
->>>>>>> 34e7f2b (inital commit)
