@@ -1,4 +1,4 @@
-"""Write YOLO-style training metrics and curve images after every epoch."""
+"""Write YOLO-style training metrics and result charts after every epoch."""
 
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ except ImportError:
 
 
 class TrainingPlotsCallback(pl.Callback):
-    """Persist CSV, training curves, result charts, and confusion heatmaps."""
+    """Persist CSV, the consolidated results chart, and confusion heatmaps."""
 
     COLUMNS = (
         "epoch", "train/box_loss", "train/cls_loss", "train/dfl_loss",
@@ -26,13 +26,12 @@ class TrainingPlotsCallback(pl.Callback):
     )
 
     def __init__(self, dirpath="ckpts", enabled=True, csv_name="results.csv",
-                 results_name="results.png", loss_name="loss_curves.png"):
+                 results_name="results.png"):
         super().__init__()
         self.dirpath = Path(dirpath)
         self.enabled = bool(enabled)
         self.csv_path = self.dirpath / csv_name
         self.results_path = self.dirpath / results_name
-        self.loss_path = self.dirpath / loss_name
         self.rows: dict[int, dict[str, float | int | None]] = {}
         self._loaded = False
 
@@ -115,12 +114,6 @@ class TrainingPlotsCallback(pl.Callback):
 
     def _render(self):
         self._write_csv()
-        self._plot(
-            self.loss_path,
-            [("Box Loss", "train/box_loss"), ("Classification Loss", "train/cls_loss"),
-             ("DFL Loss", "train/dfl_loss")],
-            columns=3,
-        )
         self._plot(
             self.results_path,
             [("Box Loss", "train/box_loss"), ("Classification Loss", "train/cls_loss"),

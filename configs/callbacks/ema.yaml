@@ -14,7 +14,6 @@ plots:
   enabled: true
   csv_name: results.csv
   results_name: results.png
-  loss_name: loss_curves.png
   confusion_matrix:
     enabled: true
     conf: 0.25

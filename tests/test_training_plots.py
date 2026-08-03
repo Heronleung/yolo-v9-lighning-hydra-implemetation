@@ -19,7 +19,7 @@ class DummyTrainer:
     }
 
 
-def test_writes_csv_plots_and_resumes(tmp_path):
+def test_writes_consolidated_results_and_resumes(tmp_path):
     callback = TrainingPlotsCallback(tmp_path)
     trainer = DummyTrainer()
 
@@ -35,10 +35,11 @@ def test_writes_csv_plots_and_resumes(tmp_path):
     )
     callback.on_validation_end(trainer, None)
 
-    for name in ("results.csv", "results.png", "loss_curves.png"):
+    for name in ("results.csv", "results.png"):
         path = tmp_path / name
         assert path.is_file()
         assert path.stat().st_size > 0
+    assert not (tmp_path / "loss_curves.png").exists()
 
     with (tmp_path / "results.csv").open() as f:
         rows = list(csv.DictReader(f))

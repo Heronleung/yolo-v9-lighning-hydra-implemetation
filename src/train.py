@@ -117,7 +117,6 @@ def main(cfg: DictConfig) -> None:
             enabled=bool(plots_cfg.get("enabled", True)),
             csv_name=str(plots_cfg.get("csv_name", "results.csv")),
             results_name=str(plots_cfg.get("results_name", "results.png")),
-            loss_name=str(plots_cfg.get("loss_name", "loss_curves.png")),
         ),
         pl.callbacks.ModelCheckpoint(dirpath=str(ckpt_name), save_last=True, save_top_k=0),
     ]
